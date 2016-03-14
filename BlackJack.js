@@ -1,5 +1,8 @@
 var theDeck=[];
 var placeInDeck = 0;
+var playerTotalCards = 2;
+var dealerTotalCards = 2;
+
 
 $(document).ready(function(){
 
@@ -40,9 +43,25 @@ $(document).ready(function(){
 		for (i=0; i<hand.length; i++){
 			var cardValue = Number(hand[i].slice(0, -1));
 			total += cardValue;
+			if(cardValue == 11){
+				total = 10;
+			}else if(cardValue == 12){
+				total = 10;
+			}else if(cardValue == 13){
+				total = 10;
+			}else if(cardValue == 14){
+				total = 1;
+			}
 		}
 		var idToGet = '.' + who + '-total';
 		$(idToGet).html(total);
+
+		//good place to program bust(>21)
+		if(total > 21){
+			bust(who);
+
+		}
+		return total;
 	}
 
 	function shuffleDeck(){
@@ -78,10 +97,65 @@ $(document).ready(function(){
 	}
 
 	function hit(){
+		var slot = '';
+		if(playerTotalCards == 2){slot = "three";}
+		else if(playerTotalCards == 3){slot = "four";}
+		else if(playerTotalCards == 4){slot = "five";}
+		else if(playerTotalCards == 5){slot = "six";}
+		
+		placeCard(theDeck[placeInDeck], 'player', slot);
+		playerHand.push(theDeck[placeInDeck]);
+		calculateTotal(playerHand, 'player');
+		placeInDeck++;
+		playerTotalCards++;
 		
 	}
 
 	function stand(){
-		
+		var dealerTotal = $('.dealer-total').html();
+		while (dealerTotal < 17){
+			if(dealerTotalCards == 2){slot = 'three';}
+			else if(dealerTotalCards == 3){slot = "four";}
+			else if(dealerTotalCards == 4){slot = "five";}
+			else if(dealerTotalCards == 5){slot = "six";}
+			placeCard(theDeck[placeInDeck], 'dealer', slot);
+			dealerHand.push(theDeck[placeInDeck]);
+			dealerTotalCards++;
+			placeInDeck++;
+			calculateTotal(dealerHand, 'dealer');
+			dealerTotal = $('dealer-total').html();
+		}
+		checkWin();
 	}
+
+	function checkWin(){
+		var playerHas = Number($('.player-total').html());
+		var dealerHas = Number($('.dealer-total').html());
+		if(dealerHas > 21){
+			//dealer has busted
+			bust('dealer');
+		}else{
+			//neither player busted and the dealer has at least 17
+			if(playerHas > dealerHas){
+				//player won
+				$('#message').html('You won!')
+			}
+			else if(dealerHas > playerHas){
+				//dealer won
+				$('#message').html('Dealer won!')
+			}else{
+				//tie
+				$('#message').html('Tie Game!')
+			}
+		}
+	}
+
+	function bust(who){
+		if(who === 'player'){
+			$('#message').html('You Busted!')
+		}else{
+			$('#message').html('Dealer Busted!')
+		}
+	}
+
 }); //change to document.ready if problem occurs! move it up
