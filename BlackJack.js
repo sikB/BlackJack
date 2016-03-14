@@ -38,9 +38,11 @@ $(document).ready(function(){
 	function calculateTotal(hand, who){
 		var total=0;
 		for (i=0; i<hand.length; i++){
-			var cardValue = hand[i].slice(0, -1);
-			console.log(cardValue);
+			var cardValue = Number(hand[i].slice(0, -1));
+			total += cardValue;
 		}
+		var idToGet = '.' + who + '-total';
+		$(idToGet).html(total);
 	}
 
 	function shuffleDeck(){
