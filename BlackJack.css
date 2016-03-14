@@ -1,7 +1,11 @@
+body{
+	background: url('http://previews.123rf.com/images/gudinny/gudinny1301/gudinny130100104/17616931-Poker-chips-seamless-Stock-Vector-casino-vegas.jpg');
+}
+
 .the-table{
 	background-color: green;
 	margin-top: 5%;
-	padding: 5% 0% 15%;
+	padding: 5% 0% 20%;
 	border: 15px solid #800020;
 	border-radius: 0% 0% 50% 50%;
 }
@@ -45,6 +49,25 @@
 #message{
 	color: white;
 	font-size: 30px;
+}
+
+.reset-button button{
+	width: 100%;
+	color: white;
+	background-color: red;
+	text-align: center;
+	margin-top: 10%;
+}
+.player-chips{
+	border-radius: 100%;
+	background-color: red;
+	color: white;
+	border: 5px dotted white;
+	font-size: 22px;
+	position: relative;
+	left: 15%;
+	margin-left: 6%;
+	margin-top: 5%;
 }
 
 
