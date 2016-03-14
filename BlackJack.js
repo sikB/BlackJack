@@ -1,4 +1,5 @@
 var theDeck=[];
+var placeInDeck = 0;
 
 $(document).ready(function(){
 
@@ -16,8 +17,32 @@ $(document).ready(function(){
 	});
 
 	function deal(){
-		theDeck = shuffleDeck();
+		shuffleDeck();
+		playerHand = [ theDeck[0], theDeck[2] ];
+		dealerHand = [ theDeck[1], theDeck[3] ];
+		placeInDeck = 4;
+		placeCard(playerHand[0], 'player', 'one');
+		placeCard(dealerHand[0], 'dealer', 'one');
+		placeCard(playerHand[1], 'player', 'two');
+		placeCard(dealerHand[1], 'dealer', 'two');
+		calculateTotal(playerHand, 'player');
+		calculateTotal(dealerHand, 'dealer');
 	}
+
+	function placeCard(card, who, slot){
+		var currId = '#' + who + '-card-' + slot;
+		$(currId).removeClass('empty');
+		$(currId).html(card);
+	}
+
+	function calculateTotal(hand, who){
+		var total=0;
+		for (i=0; i<hand.length; i++){
+			var cardValue = hand[i].slice(0, -1);
+			console.log(cardValue);
+		}
+	}
+
 	function shuffleDeck(){
 		for(s=1; s<=4; s++){
 			var suit="";
@@ -35,8 +60,19 @@ $(document).ready(function(){
 				for(i=1; i<=13; i++){
 					theDeck.push(i+suit);
 				
+					}
+		}
+		var numberOfTimesToShuffle = 500;
+		for(i=1; i<500; i++){
+			card1 = Math.floor(Math.random() * theDeck.length);
+			card2 = Math.floor(Math.random() * theDeck.length);
+			if(card1 != card2){
+				temp = theDeck[card1];
+				theDeck[card1] = theDeck[card2];
+				theDeck[card2] = temp;
 			}
 		}
+
 	}
 
 	function hit(){
