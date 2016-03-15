@@ -6,7 +6,7 @@ var clicks = 0;
 var playerBank = 500;
 var playerLoss = 0;
 var bet = 0;
-var whoWon = '';
+// var whoWon = '';
 
 $(document).ready(function(){
 
@@ -85,7 +85,6 @@ function reset(){
 		placeCard(dealerHand[1], 'dealer', 'two');
 		calculateTotal(playerHand, 'player');
 		calculateTotal(dealerHand, 'dealer');
-		checkWin();
 	}
 
 	function placeCard(card, who, slot){
@@ -217,38 +216,31 @@ function reset(){
 			$('.player-bank').html(playerBank);
 		}
 		else if(dealerHas == 21){
-			whoWon = 'dealer';
 			$('#message').html('Dealer Won!');
+			setTimeout(function(){$('#message').hide()}, 1500);
 		}
 		else if(playerHas == 21){
-			whoWon = 'player';
 			$('#message').html('Player Won!');
 			playerBank += bet * 2;
 			$('.player-bank').html(playerBank);
+			setTimeout(function(){$('#message').hide()}, 1500);
 		}
 		else{
 			//neither player busted and the dealer has at least 17
 			if(playerHas > dealerHas){
 				//player won
-				console.log('player');
-				whoWon = 'player';
 				$('#message').html('You won!');
-				console.log(playerBank);
 				playerBank += bet * 2;
-				console.log(playerBank);
 				$('.player-bank').html(playerBank);
 				setTimeout(function(){$('#message').hide()}, 1500);
 			}
 			else if(dealerHas > playerHas){
 				console.log('dealer');
 				//dealer won
-				whoWon = 'dealer';
 				$('#message').html('Dealer won!');
 				setTimeout(function(){$('#message').hide()}, 1500);
 			}else{
 				//tie
-				console.log('tie');
-				whoWon = 'tie';
 				$('#message').html('Tie Game!')
 				setTimeout(function(){$('#message').hide()}, 1500);
 			}
@@ -258,11 +250,9 @@ function reset(){
 
 	function bust(who){
 		if(who == 'player'){
-			whoWon = 'dealer';
 			$('#message').html('You Busted! You Lose!')
 			setTimeout(function(){$('#message').hide()}, 1500);
 		}else{
-			whoWon = 'player';
 			$('#message').html('Dealer Busted! You Win!')
 			setTimeout(function(){$('#message').hide()}, 1500);
 		}
