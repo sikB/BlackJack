@@ -72,8 +72,28 @@ body{
 
 #player-game-info{
 	color: white;
-	right: 300px;
+	right: 37%;
 	position: absolute;
+	top: 70%;
+}
+
+.your-bank-balance{
+	color: white;
+	position: absolute;
+	left: 45%;
+	top: 65%;
+}
+.your-lost-chips{
+	color: white;
+	position: absolute;
+	left: 45%;
+	top: 65%;
+}
+.your-bet{
+	color: white;
+	position: absolute;
+	left: 45%;
+	top: 65%;
 }
 
 

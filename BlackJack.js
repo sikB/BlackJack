@@ -22,7 +22,7 @@ $(document).ready(function(){
 			stand();
 		}else if(clickedButton == 'twenty-five'){
 			bet += 25;
-			playerBank -=25;
+			playerBank -= 25;
 			// addTwentyFive();
 			$('.player-bet').html(bet);
 			$('.player-bank').html(playerBank)
