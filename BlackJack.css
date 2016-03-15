@@ -70,7 +70,11 @@ body{
 	margin-top: 5%;
 }
 
-
+#player-game-info{
+	color: white;
+	right: 300px;
+	position: absolute;
+}
 
 
 

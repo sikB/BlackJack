@@ -20,76 +20,60 @@ $(document).ready(function(){
 		}
 		else if(clickedButton == 'stand-button'){
 			stand();
+		}else if(clickedButton == 'twenty-five'){
+			bet += 25;
+			playerBank -=25;
+			// addTwentyFive();
+			$('.player-bet').html(bet);
+			$('.player-bank').html(playerBank)
+		}
+		else if(clickedButton == 'fifty'){
+			bet += 50;
+			playerBank -=50;
+			// addTwentyFive();
+			$('.player-bet').html(bet);
+			$('.player-bank').html(playerBank)
+		}
+		else if(clickedButton == 'seventy-five'){
+			bet += 75;
+			playerBank -=75;
+			// addTwentyFive();
+			$('.player-bet').html(bet);
+			$('.player-bank').html(playerBank)
+		}
+		else if(clickedButton == 'hundred'){
+			bet += 100;
+			playerBank -=100;
+			// addTwentyFive();
+			$('.player-bet').html(bet);
+			$('.player-bank').html(playerBank)
+		}
+		else if(clickedButton == 'five-hundred'){
+			bet += 500;
+			playerBank -=500;
+			// addTwentyFive();
+			$('.player-bet').html(bet);
+			$('.player-bank').html(playerBank)
 		}
 	});
 
 $('#reset-button').click(function(){
 	reset();
 })
-	function reset(){
-		$('.card').html('');
-		$('.card').addClass('empty');
-		$('.dealer-total').html(0);
-		$('.player-total').html(0);
-		dealerTotalCards = 2;
-		playerTotalCards = 2;
-		$('#hit-button').prop('disabled', false);
-		$('#deal-button').prop('disabled', false);
-		// $('#message').hide();
-	};
 
-	function addTwentyFive(){
-	 clicks += 25;
-	 bet += 25;
-	 if(whoWon == 'player'){
-	 	playerBank + 25;
-	 }else if(whoWon == 'tie'){
-	 	playerBank - 0;}
-	 	else{playerBank - 25};
-
-	}
-
-	function addFifty(){
-	 clicks += 50;
-	 bet += 50;
-	 if(whoWon == player){
-	 	playerBank + 50;
-	 }else if(whoWon == 'tie'){
-	 	playerBank - 0;}
-	 	else{playerBank - 50};
-
-	}
-	function addSeventyFive(){
-	 clicks += 75;
-	 bet += 75;
-	 if(whoWon == player){
-	 	playerBank + 75;
-	 }else if(whoWon == 'tie'){
-	 	playerBank - 0;}
-	 	else{playerBank - 75};
-
-	}
-	function addHundred(){
-	 clicks += 100;
-	 bet += 100;
-	 if(whoWon == player){
-	 	playerBank + 100;
-	 }else if(whoWon == 'tie'){
-	 	playerBank - 0;}
-	 	else{playerBank - 100};
-
-	}
-	function addFiveHundred(){
-	 clicks += 500;
-	 bet += 500;
-	 if(whoWon == player){
-	 	playerBank + 500;
-	 }else if(whoWon == 'tie'){
-	 	playerBank - 0;}
-	 	else{playerBank - 500};
-
-	}
-
+function reset(){
+	$('.card').html('');
+	$('.card').addClass('empty');
+	$('.dealer-total').html(0);
+	$('.player-total').html(0);
+	dealerTotalCards = 2;
+	playerTotalCards = 2;
+	$('#hit-button').prop('disabled', false);
+	$('#deal-button').prop('disabled', false);
+	bet = 0;
+	$('.player-bet').html(bet);
+};
+	
 	function deal(){
 		shuffleDeck();
 		playerHand = [ theDeck[0], theDeck[2] ];
@@ -101,6 +85,7 @@ $('#reset-button').click(function(){
 		placeCard(dealerHand[1], 'dealer', 'two');
 		calculateTotal(playerHand, 'player');
 		calculateTotal(dealerHand, 'dealer');
+		checkWin();
 	}
 
 	function placeCard(card, who, slot){
@@ -198,13 +183,10 @@ $('#reset-button').click(function(){
 		placeInDeck++;
 		playerTotalCards++;
 		playerTotal = $('player-total').html();
-		
-		// bust();
-		
 	}
 
 	function stand(){
-		var dealerTotal = $('.dealer-total').html();
+		var dealerTotal = Number($('.dealer-total').html());
 		while (dealerTotal < 17){
 			if(dealerTotalCards == 2){slot = 'three';}
 			else if(dealerTotalCards == 3){slot = "four";}
@@ -215,48 +197,67 @@ $('#reset-button').click(function(){
 			calculateTotal(dealerHand, 'dealer');
 			dealerTotalCards++;
 			placeInDeck++;
-			dealerTotal = $('dealer-total').html();
+			dealerTotal = Number($('.dealer-total').html());
+
 		}
-		checkWin();
-		// bust();
 		$('#hit-button').prop('disabled', true);
 		$('#deal-button').prop('disabled', true);
-		
+		checkWin();		
 	}
 
 	function checkWin(){
+		$('#message').show();
 		var playerHas = Number($('.player-total').html());
 		var dealerHas = Number($('.dealer-total').html());
+		console.lopgplayerHas
 		if(dealerHas > 21){
 			//dealer has busted
 			bust('dealer')
-		// }else if(playerHas > 21){
-		// 	bust('player');
+			playerBank += bet * 2;
+			$('.player-bank').html(playerBank);
+		}
+		else if(dealerHas == 21){
+			whoWon = 'dealer';
+			$('#message').html('Dealer Won!');
+		}
+		else if(playerHas == 21){
+			whoWon = 'player';
+			$('#message').html('Player Won!');
+			playerBank += bet * 2;
+			$('.player-bank').html(playerBank);
 		}
 		else{
 			//neither player busted and the dealer has at least 17
 			if(playerHas > dealerHas){
 				//player won
+				console.log('player');
 				whoWon = 'player';
 				$('#message').html('You won!');
+				console.log(playerBank);
+				playerBank += bet * 2;
+				console.log(playerBank);
+				$('.player-bank').html(playerBank);
 				setTimeout(function(){$('#message').hide()}, 1500);
 			}
 			else if(dealerHas > playerHas){
+				console.log('dealer');
 				//dealer won
 				whoWon = 'dealer';
 				$('#message').html('Dealer won!');
 				setTimeout(function(){$('#message').hide()}, 1500);
 			}else{
 				//tie
+				console.log('tie');
 				whoWon = 'tie';
 				$('#message').html('Tie Game!')
 				setTimeout(function(){$('#message').hide()}, 1500);
 			}
 		}
+
 	}
 
 	function bust(who){
-		if(who === 'player'){
+		if(who == 'player'){
 			whoWon = 'dealer';
 			$('#message').html('You Busted! You Lose!')
 			setTimeout(function(){$('#message').hide()}, 1500);
