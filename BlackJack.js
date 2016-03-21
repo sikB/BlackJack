@@ -113,12 +113,12 @@ function reset(){
 			}else if(cardValue == 12){
 				cardValue = 10;
 			}else if(cardValue == 13){
-				cardValue = 10;}
-				if(cardValue == 1){
-					if(total + 11 <= 21){
-						cardValue = 11;
-					}else{
+				// cardValue = 10;}
+				// if(cardValue == 1){
+					if(total + 11 > 21){
 						cardValue = 1;
+					}else{
+						cardValue = 11;
 					}
 				}
 				total += cardValue;
@@ -214,9 +214,15 @@ function reset(){
 			playerBank += bet * 2;
 			$('.player-bank').html(playerBank);
 		}
+		else if(playerHas > 21){
+			bust('player')
+			playerBank -= bet;
+			$('.player-bank').html(playerBank);
+		}
 		else if(dealerHas == 21){
 			$('#message').html('Dealer Won!');
-			playerLoss += bet;
+			playerBank -= bet;
+			playerLoss -= bet;
 			$('.player-loss').html(playerLoss);
 			setTimeout(function(){$('#message').hide()}, 1500);
 		}
@@ -224,7 +230,7 @@ function reset(){
 			$('#message').html('Player Won!');
 			playerBank += bet * 2;
 			$('.player-bank').html(playerBank);
-			playerLoss -= bet;
+			playerLoss += bet;
 			$('.player-loss').html(playerLoss);
 			setTimeout(function(){$('#message').hide()}, 1500);
 		}
@@ -235,15 +241,14 @@ function reset(){
 				$('#message').html('You won!');
 				playerBank += bet * 2;
 				$('.player-bank').html(playerBank);
-				playerLoss -= bet;
+				playerLoss += bet;
 				$('.player-loss').html(playerLoss);
 				setTimeout(function(){$('#message').hide()}, 1500);
 			}
 			else if(dealerHas > playerHas){
-				console.log('dealer');
 				//dealer won
 				$('#message').html('Dealer won!');
-				playerLoss += bet;
+				playerLoss -= bet;
 				$('.player-loss').html(playerLoss);
 				setTimeout(function(){$('#message').hide()}, 1500);
 			}else{
@@ -254,24 +259,27 @@ function reset(){
 				setTimeout(function(){$('#message').hide()}, 1500);
 			}
 		}
-		if(playerLoss > 0){
+		if(playerLoss < 0){
 			$('.player-loss').addClass('loss');
 		}else{
 			$('.player-loss').removeClass('loss');
 		}
-
 	}
 
 	function bust(who){
 		if(who == 'player'){
 			$('#message').html('You Busted! You Lose!')
-			playerBank += bet;
+			playerBank -= bet;
 			$('.player-bank').html(playerBank);
+			playerLoss -= bet;
+			$('.player-loss').html(playerLoss);
 			setTimeout(function(){$('#message').hide()}, 1500);
 		}else{
 			$('#message').html('Dealer Busted! You Win!')
-			playerLoss -= bet;
+			playerBank += bet * 2;
 			$('.player-bank').html(playerBank);
+			playerLoss += bet;
+			$('.player-loss').html(playerLoss);
 			setTimeout(function(){$('#message').hide()}, 1500);
 		}
 	}
