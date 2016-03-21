@@ -81,23 +81,26 @@ body{
 	color: white;
 	position: absolute;
 	left: 45%;
-	top: 65%;
+	top: 70%;
 }
 .your-lost-chips{
 	color: white;
 	position: absolute;
 	left: 45%;
-	top: 65%;
+	top: 72.5%;
 }
 .your-bet{
 	color: white;
 	position: absolute;
 	left: 45%;
-	top: 65%;
+	top: 75%;
 }
-
-
-
+span.loss{
+	color: red;
+}
+.loss{
+	color: red;
+}
 
 
 

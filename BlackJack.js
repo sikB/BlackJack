@@ -208,7 +208,6 @@ function reset(){
 		$('#message').show();
 		var playerHas = Number($('.player-total').html());
 		var dealerHas = Number($('.dealer-total').html());
-		console.lopgplayerHas
 		if(dealerHas > 21){
 			//dealer has busted
 			bust('dealer')
@@ -217,12 +216,16 @@ function reset(){
 		}
 		else if(dealerHas == 21){
 			$('#message').html('Dealer Won!');
+			playerLoss += bet;
+			$('.player-loss').html(playerLoss);
 			setTimeout(function(){$('#message').hide()}, 1500);
 		}
 		else if(playerHas == 21){
 			$('#message').html('Player Won!');
 			playerBank += bet * 2;
 			$('.player-bank').html(playerBank);
+			playerLoss -= bet;
+			$('.player-loss').html(playerLoss);
 			setTimeout(function(){$('#message').hide()}, 1500);
 		}
 		else{
@@ -232,18 +235,29 @@ function reset(){
 				$('#message').html('You won!');
 				playerBank += bet * 2;
 				$('.player-bank').html(playerBank);
+				playerLoss -= bet;
+				$('.player-loss').html(playerLoss);
 				setTimeout(function(){$('#message').hide()}, 1500);
 			}
 			else if(dealerHas > playerHas){
 				console.log('dealer');
 				//dealer won
 				$('#message').html('Dealer won!');
+				playerLoss += bet;
+				$('.player-loss').html(playerLoss);
 				setTimeout(function(){$('#message').hide()}, 1500);
 			}else{
 				//tie
 				$('#message').html('Tie Game!')
+				playerBank += bet;
+				$('.player-bank').html(playerBank);
 				setTimeout(function(){$('#message').hide()}, 1500);
 			}
+		}
+		if(playerLoss > 0){
+			$('.player-loss').addClass('loss');
+		}else{
+			$('.player-loss').removeClass('loss');
 		}
 
 	}
@@ -251,9 +265,13 @@ function reset(){
 	function bust(who){
 		if(who == 'player'){
 			$('#message').html('You Busted! You Lose!')
+			playerBank += bet;
+			$('.player-bank').html(playerBank);
 			setTimeout(function(){$('#message').hide()}, 1500);
 		}else{
 			$('#message').html('Dealer Busted! You Win!')
+			playerLoss -= bet;
+			$('.player-bank').html(playerBank);
 			setTimeout(function(){$('#message').hide()}, 1500);
 		}
 	}
