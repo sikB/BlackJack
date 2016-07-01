@@ -1,10 +1,9 @@
 body{
-	background: url('http://previews.123rf.com/images/gudinny/gudinny1301/gudinny130100104/17616931-Poker-chips-seamless-Stock-Vector-casino-vegas.jpg');
+	background: url('22.jpeg') -92% 20% ;
 }
 
 .the-table{
 	background-color: green;
-	margin-top: 5%;
 	padding: 5% 0% 20%;
 	border: 15px solid #800020;
 	border-radius: 0% 0% 50% 50%;
@@ -20,9 +19,9 @@ body{
 }
 
 .card.empty{
-	background: url('http://76931d.medialib.glogster.com/superstalk3rcat/avatars/1362263250/medium-superstalk3rcat.png');
+	background: url('backcard.jpg') no-repeat;
 	background-size: 100%;
-	border: dashed 1px black; 
+	border: none 1px black; 
 }
 
 .col-sm-2.card{
